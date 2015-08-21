@@ -22,7 +22,7 @@ $data = $db->read(['pole'])
 			
 var_dump($data);
 
-// Example 2: Read All to PDOStatement object
+// Example 2: Read All to array
 $data =  $db->read()
 			->get();
 

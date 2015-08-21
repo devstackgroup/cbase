@@ -64,7 +64,7 @@ final class Mysql
 			$this->rowCount =  $this->sqlQuery
 									->rowCount();
 
-			if($this->isCUD($statement,['INSERT','UPDATE','DELETE']) || ($fetchAll && $fetchMode === 'obj')){
+			if(($fetchAll && $fetchMode === 'obj') || $this->isCUD($statement,['INSERT','UPDATE','DELETE'])){
 				$this->sqlResult = $this->sqlQuery;
 				return $this;
 			} 
@@ -79,7 +79,7 @@ final class Mysql
 				$this->sqlResult = $this->sqlQuery
 										->fetch($this->fetchModeArray[$fetchMode]);
 
-			return $this->sqlResult;
+			return $this;
 		}
 
 		array_push($this->sqlResult, $this->pdo->errorInfo());
@@ -101,6 +101,11 @@ final class Mysql
 				return $executeResponse;
 			} 
 
+			if($fetchAll && $fetchMode === 'obj'){
+				$this->sqlResult = $this->sqlQuery;
+				return $this;
+			}
+			
 			if($fetchMode !== 'obj' && !array_key_exists($fetchMode, $this->fetchModeArray))
 				$fetchMode = 'obj';
 			 
@@ -111,7 +116,7 @@ final class Mysql
 				$this->sqlResult = $this->sqlQuery
 										->fetch($this->fetchModeArray[$fetchMode]);
 
-			return $this->sqlResult;
+			return $this;
 		}
 
 		array_push($this->sqlResult, $this->pdo->errorInfo());

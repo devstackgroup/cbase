@@ -34,24 +34,20 @@ class Query
 		return $this;
 	}
 
-	public function get(array $fetchAttributes = [])
+	public function get(array $fetchAttributes = null, array $executeAttributes = null)
 	{
 		if(!empty($fetchAttributes)){
 			switch (count($fetchAttributes)) {
 				case 2:
-					return $this->pdo
-								->query($this->sqlQuery, $fetchAttributes['all'], $fetchAttributes['fetch']);	
+					return $this->query($this->sqlQuery, $executeAttributes, $fetchAttributes['all'], $fetchAttributes['fetch']);	
 				case 1:
-					return $this->pdo
-								->query($this->sqlQuery, $fetchAttributes['all']);				
+					return $this->query($this->sqlQuery, $executeAttributes, $fetchAttributes['all']);		
 				default:
-					return $this->pdo
-								->query($this->sqlQuery);
+					return $this->query($this->sqlQuery);
 			}
 		}
-		return $this->pdo
-					->query($this->sqlQuery)
-					->get();
+
+		return $this->query($this->sqlQuery);
 	}
 
 	public function limit($limit)
@@ -97,5 +93,18 @@ class Query
 	public function setTable($table)
 	{
 		$this->table = $table;
+	}
+
+	public function query($statement, array $attributes = null, $fetchAll = true, $fetchMode = 'obj')
+	{
+		if(!empty($attributes)){
+			$executeResponse = $this->pdo
+									->prepare($statement, $attributes, $fetchAll, $fetchMode); 
+		} else{
+			$executeResponse = $this->pdo
+									->query($statement, $fetchAll, $fetchMode); 
+		}
+		
+		return $executeResponse->get();
 	}
 }
