@@ -1,5 +1,5 @@
 # cbase
-CRUD class for MySQL with PDO
+CRUD library for MySQL with PDO
 
 ## How to use it
 
