@@ -4,6 +4,7 @@ namespace CBase\Query;
 
 use CBase\Database\Mysql\Mysql;
 
+
 /**
 * Query class
 */
@@ -17,9 +18,9 @@ class Query
 	private $pageNumbers = 0;
 	private $currentPage = null;
 
-	public function __construct(PDO $pdo)
+	public function __construct(\PDO $pdo)
 	{
-		$this->pdo = new Db($pdo);
+		$this->pdo = new Mysql($pdo);
 	}
 
 	public function read($column = '*')

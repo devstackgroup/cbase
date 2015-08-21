@@ -2,6 +2,8 @@
 
 namespace CBase\Database\Mysql;
 
+use \PDO;
+
 /**
 * Mysql class
 */
