@@ -14,6 +14,7 @@ class Query
 	private $table = null;
 	private $rowCount = 0;
 	private $sqlQuery = null;
+	private $sqlAttributes = [];
 
 	private $pageNumbers = 0;
 	private $currentPage = null;
@@ -21,6 +22,22 @@ class Query
 	public function __construct(\PDO $pdo)
 	{
 		$this->pdo = new Mysql($pdo);
+	}
+
+	public function create($fields)
+	{
+		$fieldColumn = [];
+		$fieldValue  = [];
+
+		foreach ($fields as $key => $value) {
+			$fieldColumn[] = "$key = ?";
+			$fieldValue[] = $value;
+		}
+
+		$fieldColumn = implode(',', $fieldColumn);
+		$this->sqlQuery = "INSERT {$this->table} SET $fieldColumn";
+
+		return $this->query($this->sqlQuery, $fieldValue, false);
 	}
 
 	public function read($column = '*')
@@ -34,24 +51,49 @@ class Query
 		return $this;
 	}
 
-	public function get(array $fetchAttributes = [])
+	public function update($fields)
+	{
+		$fieldColumn = [];
+		$fieldValue  = [];
+
+		foreach ($fields as $key => $value) {
+			$fieldColumn[] = "$key = ?";
+			$fieldValue[] = $value;
+		}
+
+		$fieldColumn = implode(',', $fieldColumn);
+		$this->sqlQuery = "UPDATE {$this->table} SET $fieldColumn";
+		$this->sqlAttributes = $fieldValue;
+
+		return $this;
+	}
+
+	public function delete()
+	{
+		$this->sqlQuery = "DELETE FROM {$this->table}";
+
+		return $this;
+	}
+
+	public function get(array $fetchAttributes = null, array $executeAttributes = null)
 	{
 		if(!empty($fetchAttributes)){
 			switch (count($fetchAttributes)) {
 				case 2:
-					return $this->pdo
-								->query($this->sqlQuery, $fetchAttributes['all'], $fetchAttributes['fetch']);	
+					return $this->query($this->sqlQuery, $executeAttributes, $fetchAttributes['all'], $fetchAttributes['fetch']);	
 				case 1:
-					return $this->pdo
-								->query($this->sqlQuery, $fetchAttributes['all']);				
+					return $this->query($this->sqlQuery, $executeAttributes, $fetchAttributes['all']);		
 				default:
-					return $this->pdo
-								->query($this->sqlQuery);
+					return $this->query($this->sqlQuery);
 			}
 		}
-		return $this->pdo
-					->query($this->sqlQuery)
-					->get();
+
+		return $this->query($this->sqlQuery);
+	}
+
+	public function exec()
+	{
+		return $this->query($this->sqlQuery, $this->sqlAttributes, false);
 	}
 
 	public function limit($limit)
@@ -65,37 +107,73 @@ class Query
 		return $this;
 	}
 
-	public function orderBy($params)
+	public function orderBy($orders)
 	{
-		if(isset($params['conditions']) && is_array($params['conditions'])){
-			foreach($params['conditions'] as $key => $value){
-				if(is_numeric($key)){
-					$conditions[] = $value;
-				}else{
-					$conditions[] = $key.' = '.$value;
-				}				
-			}
-
-			$this->sqlQuery .= ' WHERE '.implode(' AND ', $conditions);
+		foreach($orders as $key => $value){
+			if(is_numeric($key)){
+				$queryOrders[] = $value;
+			}else{
+				$queryOrders[] = $key.' '.$value;
+			}	
 		}
 
-		if(isset($params['order']) && is_array($params['order'])){
-			foreach($params['order'] as $key => $value){
-				if(is_numeric($key)){
-					$orders[] = $value;
-				}else{
-					$orders[] = $key.' '.$value;
-				}	
-			}
-
-			$this->sqlQuery .=' ORDER BY '.implode(',', $orders);
-		}
+		$this->sqlQuery .=' ORDER BY '.implode(',', $queryOrders);
 
 		return $this;
+	}
+
+	public function where($conditions, $or = false)
+	{
+		foreach($conditions as $key => $value){
+				if(is_numeric($key)){
+					$fieldConditions[] = $value;
+				}else{
+					$fieldConditions[] = $key.' = '.$value;
+				}				
+		}
+
+		if(isset($or)){
+			$this->sqlQuery .= ' WHERE '.implode(' OR ', $fieldConditions);
+
+			return $this;
+		}
+
+		$this->sqlQuery .= ' WHERE '.implode(' AND ', $fieldConditions);
+
+		return $this;
+		
 	}
 
 	public function setTable($table)
 	{
 		$this->table = $table;
+	}
+
+	public function query($statement, array $attributes = null, $fetchAll = true, $fetchMode = 'obj')
+	{
+		if(!empty($attributes)){
+			$executeResponse = $this->pdo
+									->prepare($statement, $attributes, $fetchAll, $fetchMode); 
+		} else{
+			$executeResponse = $this->pdo
+									->query($statement, $fetchAll, $fetchMode); 
+		}
+
+		if(is_bool($executeResponse))
+			return $executeResponse;
+		
+		return $executeResponse->get();
+	}
+
+	public function rowCount()
+	{
+		return $this->pdo
+					->getRowCount();
+	}
+
+	public function LastInsertId()
+	{
+		return $this->pdo
+					->getLastInsertId();
 	}
 }
