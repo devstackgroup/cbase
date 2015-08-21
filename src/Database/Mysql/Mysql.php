@@ -66,6 +66,7 @@ final class Mysql
 
 			if(($fetchAll && $fetchMode === 'obj') || $this->isCUD($statement,['INSERT','UPDATE','DELETE'])){
 				$this->sqlResult = $this->sqlQuery;
+
 				return $this;
 			} 
 
@@ -89,7 +90,7 @@ final class Mysql
 	public function prepare($statement, array $attributes, $fetchAll = true, $fetchMode = 'obj')
 	{
 		$this->sqlQuery =  $this->pdo
-								->query($statement);
+								->prepare($statement);
 		$executeResponse = $this->sqlQuery
 							 	->execute($attributes);
 
@@ -103,6 +104,7 @@ final class Mysql
 
 			if($fetchAll && $fetchMode === 'obj'){
 				$this->sqlResult = $this->sqlQuery;
+				
 				return $this;
 			}
 			
@@ -138,9 +140,10 @@ final class Mysql
 		return $this->sqlQuery;
 	}
 
-	public function lastInsertId()
+	public function getLastInsertId()
 	{
-		return $this->pdo->lastInsertId();
+		return $this->pdo
+					->lastInsertId();
 	}
 
 	private function isCUD($statement, array $queryType)
