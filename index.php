@@ -75,3 +75,9 @@ $db->update([
 		])
 	->exec();
 
+/**
+*
+* Close connection
+*
+*/
+$db->close();
