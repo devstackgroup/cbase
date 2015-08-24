@@ -2,6 +2,7 @@
 [![Build Status](https://travis-ci.org/devstackgroup/cbase.svg?branch=master)](https://travis-ci.org/devstackgroup/cbase)
 
 CRUD library for MySQL with PDO
+By ComStudio
 
 ## How to use it
 
