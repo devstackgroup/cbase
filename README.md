@@ -24,8 +24,8 @@ $db = new Query(require_once 'config/bootstrap.php');
 $db->setTable('test');
 
 $db->create([
-		'field' => 1
-	]);
+    'field' => 1
+   ]);
 $db->close();
 ```
 
@@ -66,7 +66,7 @@ $db = new Query(require_once 'config/bootstrap.php');
 $db->setTable('test');
 
 $data = $db->read()
-	   ->get();
+           ->get();
 			
 foreach ($data as $value) {
 	var_dump($value);
