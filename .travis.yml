@@ -15,8 +15,8 @@ before_script:
   - mysql -e "CREATE TABLE IF NOT EXISTS dbtests.testTable (id INT NOT NULL AUTO_INCREMENT, field INT, PRIMARY KEY (id));"
 
 script:
-  - mkdir -p build/logs
-  - phpunit tests --coverage-clover build/logs/clover.xml
+  - mkdir -p build/devstackgroup/cbase/logs
+  - phpunit tests --coverage-clover build/devstackgroup/cbase/logs/clover.xml
 
 after_script:
   - php vendor/bin/coveralls -v
