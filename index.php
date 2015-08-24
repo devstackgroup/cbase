@@ -16,8 +16,8 @@ $db->setTable('test');
 
 // Example: Create field and set value
 $db->create([
-		'field' => 1
-	]);
+        'field' => 1
+    ]);
 
 /**
 *
@@ -27,23 +27,23 @@ $db->create([
 
 // Example 1: Read All with order by id DESC and limit 2 to assoc array
 $data = $db->read(['field'])
-			->orderBy([
-				'id' => 'DESC'
-			])
-			->limit(2)
-			->get([
-				'all' => true, 
-				'fetch' => 'assoc'
-			]);
-			
+            ->orderBy([
+                'id' => 'DESC'
+            ])
+            ->limit(2)
+            ->get([
+                'all' => true, 
+                'fetch' => 'assoc'
+            ]);
+            
 var_dump($data);
 
 // Example 2: Read All to array
 $data =  $db->read()
-			->get();
+            ->get();
 
 foreach ($data as $value) {
-	var_dump($value);
+    var_dump($value);
 }
 
 /**
@@ -54,12 +54,12 @@ foreach ($data as $value) {
 
 // Example: Update field and set new value where id = 1
 $db->update([
-		'field' => 2
-	])
-	->where([
-			'id' => 1
-		])
-	->exec();
+        'field' => 2
+    ])
+    ->where([
+            'id' => 1
+        ])
+    ->exec();
 
 /**
 *
@@ -69,10 +69,10 @@ $db->update([
 
 // Example: Delete field from table where id = 1
  $db->delete()
-	->where([
-			'id' => 1
-		])
-	->exec();
+    ->where([
+            'id' => 1
+        ])
+    ->exec();
 
 /**
 *
