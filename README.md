@@ -1,6 +1,5 @@
 # cbase
-
-[![Build Status](https://travis-ci.org/devstackgroup/cbase.svg?branch=master)](https://travis-ci.org/devstackgroup/cbase)
+[![Build Status](https://travis-ci.org/devstackgroup/cbase.svg?branch=dev)](https://travis-ci.org/devstackgroup/
 
 CRUD library for MySQL with PDO
 
