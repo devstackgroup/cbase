@@ -8,8 +8,11 @@ class TestTableTest extends YamlTestCase
 {
     public function testQueryTable()
     {
-        $queryTable = $this->getConnection()->createQueryTable('testTable', 'SELECT * FROM testTable');
-        $expectedTable = $this->getConnection()->createDataSet()->getTable('testTable'); 
+        $queryTable = $this->getConnection()
+        				   ->createQueryTable('testTable', 'SELECT * FROM testTable');
+        $expectedTable = $this->getConnection()
+        					  ->createDataSet()
+        					  ->getTable('testTable'); 
 
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
@@ -27,7 +30,8 @@ class TestTableTest extends YamlTestCase
 			$queryRow[] = $row;
 		}
 
-		$this->getConnection()->close();
+		$this->getConnection()
+			 ->close();
 
 		$this->assertEquals($fixtureRow['id'], $queryRow[0]['id']);
 		$this->assertEquals($fixtureRow['field'], $queryRow[0]['field']);
@@ -49,7 +53,8 @@ class TestTableTest extends YamlTestCase
 			$queryRow[] = $row;
 		}
 
-		$this->getConnection()->close();
+		$this->getConnection()
+			 ->close();
 
 		$this->assertEquals($fixtureRow['id'], $queryRow[0]['id']);
 		$this->assertEquals($fixtureRow['field'], $queryRow[0]['field']);
@@ -57,16 +62,19 @@ class TestTableTest extends YamlTestCase
 
     public function testInsertIntoTable()
     {
-    	$beforeInsertRowCount = $this->getConnection()->getRowCount('testTable');
+    	$beforeInsertRowCount = $this->getConnection()
+    								 ->getRowCount('testTable');
 
     	$db = $this->getQuery();
     	$insertResult = $db->create([
 							'field' => 1
 						   ]);
 
-		$afterInsertRowCount = $this->getConnection()->getRowCount('testTable');
+		$afterInsertRowCount = $this->getConnection()
+									->getRowCount('testTable');
 
-		$this->getConnection()->close();
+		$this->getConnection()
+			 ->close();
 
 		$this->assertEquals(true, $insertResult);
 		$this->assertEquals($beforeInsertRowCount + 1, $afterInsertRowCount);
@@ -97,7 +105,8 @@ class TestTableTest extends YamlTestCase
 			$queryRow[] = $row;
 		}
 
-		$this->getConnection()->close();
+		$this->getConnection()
+			 ->close();
 
 		$this->assertEquals(true, $updateResult);
 		$this->assertEquals(2, $queryRow[0]['field']);
@@ -105,7 +114,8 @@ class TestTableTest extends YamlTestCase
 
     public function testDeleteFromTable()
     {
-    	$beforeDeleteRowCount = $this->getConnection()->getRowCount('testTable');
+    	$beforeDeleteRowCount = $this->getConnection()
+    								 ->getRowCount('testTable');
 
     	$db = $this->getQuery();
     	$db->delete()
@@ -114,9 +124,11 @@ class TestTableTest extends YamlTestCase
 		   ])
 		   ->exec();
 
-		$afterDeleteRowCount = $this->getConnection()->getRowCount('testTable');
+		$afterDeleteRowCount = $this->getConnection()
+									->getRowCount('testTable');
 
-		$this->getConnection()->close();
+		$this->getConnection()
+			 ->close();
 
 		$this->assertEquals($beforeDeleteRowCount - 1, $afterDeleteRowCount);
 		
@@ -124,14 +136,17 @@ class TestTableTest extends YamlTestCase
 
     private function getFixtureRow($table, $index)
     {
-        $fixtureTable = $this->getConnection()->createDataSet()->getTable($table);
+        $fixtureTable = $this->getConnection()
+        					 ->createDataSet()
+        					 ->getTable($table);
 
         return $fixtureTable->getRow($index);
     }
 
     private function getQuery()
     {
-    	$pdo = $this->getConnection()->getConnection();
+    	$pdo = $this->getConnection()
+    				->getConnection();
         $db = new Query($pdo);
 		$db->setTable('testTable');
 
