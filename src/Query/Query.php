@@ -5,6 +5,7 @@ namespace CBase\Query;
 use CBase\Database\Mysql\Mysql;
 
 use \Exception;
+
 /**
 * Query class
 */
