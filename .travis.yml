@@ -9,5 +9,6 @@ php:
 before_script:
   - composer self-update
   - composer install --prefer-dist
+  - mysql -e "CREATE DATABASE IF NOT EXISTS dbtests DEFAULT CHARACTER SET utf8;" -uroot
   
 script: phpunit tests
