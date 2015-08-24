@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpunit colors="true" bootstrap="./vendor/autoload.php">
+    <php>
+        <var name="DB_DSN" value="mysql:dbname=dbtests;host=localhost" />
+        <var name="DB_USER" value="dbunit" />
+        <var name="DB_PASSWORD" value="" />
+        <var name="DB_DBNAME" value="dbtests" />
+        <var name="YAML_FILE" value="testTable.yaml" />
+    </php>
+</phpunit>

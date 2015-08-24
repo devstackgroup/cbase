@@ -1,0 +1,7 @@
+testTable:
+  -
+    id: 1
+    field: 1
+  -
+    id: 2
+    field: 2
