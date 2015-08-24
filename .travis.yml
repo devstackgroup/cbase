@@ -14,11 +14,11 @@ before_script:
   - composer install --prefer-dist
   - mysql -e "CREATE DATABASE IF NOT EXISTS dbtests DEFAULT CHARACTER SET utf8;" -uroot
   - mysql -e "CREATE TABLE IF NOT EXISTS dbtests.testTable (id INT NOT NULL AUTO_INCREMENT, field INT, PRIMARY KEY (id));"
+  - mkdir -p logs
 
 script:
-  - mkdir -p build/devstackgroup/cbase/logs
-  - phpunit tests --coverage-clover build/devstackgroup/cbase/logs/clover.xml
-  - ls build/devstackgroup/cbase/logs
+  - phpunit tests --coverage-clover logs/clover.xml
+  - ls logs
   
 after_script:
   - php vendor/bin/coveralls -v
