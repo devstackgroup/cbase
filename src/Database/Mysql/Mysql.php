@@ -46,7 +46,8 @@ final class Mysql
 	public function disconnect()
 	{
 		if(isset($this->isConnect)){
-			if($this->pdo->close()){
+			if($this->sqlQuery->closeCursor()){
+				$this->pdo = null;
 				$this->isConnect = false;
 				return true;
 			} else {

@@ -27,7 +27,7 @@ $db->create([
 */
 
 // Example 1: Read All with order by id DESC and limit 2 to assoc array
-$data = $db->read(['pole'])
+$data = $db->read(['field'])
 			->orderBy([
 				'id' => 'DESC'
 			])
