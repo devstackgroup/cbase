@@ -1,5 +1,6 @@
 # cbase
 [![Build Status](https://travis-ci.org/devstackgroup/cbase.svg?branch=master)](https://travis-ci.org/devstackgroup/cbase)
+[![Latest Stable Version](https://poser.pugx.org/devstackgroup/cbase/v/stable)](https://packagist.org/packages/devstackgroup/cbase) [![Total Downloads](https://poser.pugx.org/devstackgroup/cbase/downloads)](https://packagist.org/packages/devstackgroup/cbase)  [![License](https://poser.pugx.org/devstackgroup/cbase/license)](https://packagist.org/packages/devstackgroup/cbase)
 
 CRUD library for MySQL with PDO
 
