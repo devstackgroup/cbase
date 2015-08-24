@@ -20,9 +20,9 @@ $ composer create-project devstackgroup/cbase --stability=dev
 			'mysql:host=127.0.0.1;dbname=dbname',
 			'dbuser',
 			'dbpassword'
-		);
+			);
 ```
-* ```mysql:host``` - host address
+* ```127.0.0.1``` - host address
 * ```dbname``` - database name
 * ```'dbuser'``` - database username
 * ```'dbpassword'``` - database password
