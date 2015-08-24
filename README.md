@@ -3,6 +3,8 @@
 
 CRUD library for MySQL with PDO
 
+By [ComStudio](http://comstudio.pl)
+
 ## How to use it
 
 ### Install with composer
