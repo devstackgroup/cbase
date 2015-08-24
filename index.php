@@ -4,9 +4,8 @@ require 'vendor/autoload.php';
 
 use CBase\Query\Query;
 
-$pdo = new PDO("mysql:host=127.0.0.1;dbname=dbname",'dbuser','dbpassword');
 
-$db = new Query($pdo);
+$db = new Query(require_once 'config/bootstrap.php');
 $db->setTable('test');
 
 /**
