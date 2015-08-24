@@ -4,7 +4,7 @@ namespace CBase\Query;
 
 use CBase\Database\Mysql\Mysql;
 
-
+use \Exception;
 /**
 * Query class
 */
@@ -37,7 +37,11 @@ class Query
 		$fieldColumn = implode(',', $fieldColumn);
 		$this->sqlQuery = "INSERT {$this->table} SET $fieldColumn";
 
-		return $this->query($this->sqlQuery, $fieldValue, false);
+		try {
+			return $this->query($this->sqlQuery, $fieldValue, false);
+		} catch (Exception $e){
+			return $e->getMessage();
+		}
 	}
 
 	public function read($column = '*')
@@ -77,23 +81,32 @@ class Query
 
 	public function get(array $fetchAttributes = null, array $executeAttributes = null)
 	{
-		if(!empty($fetchAttributes)){
-			switch (count($fetchAttributes)) {
-				case 2:
-					return $this->query($this->sqlQuery, $executeAttributes, $fetchAttributes['all'], $fetchAttributes['fetch']);	
-				case 1:
-					return $this->query($this->sqlQuery, $executeAttributes, $fetchAttributes['all']);		
-				default:
-					return $this->query($this->sqlQuery);
+		try {
+			if(!empty($fetchAttributes)){
+				switch (count($fetchAttributes)) {
+					case 2:
+						return $this->query($this->sqlQuery, $executeAttributes, $fetchAttributes['all'], $fetchAttributes['fetch']);	
+					case 1:
+						return $this->query($this->sqlQuery, $executeAttributes, $fetchAttributes['all']);		
+					default:
+						return $this->query($this->sqlQuery);
+				}
 			}
-		}
 
-		return $this->query($this->sqlQuery);
+			return $this->query($this->sqlQuery);
+		} catch (Exception $e){
+			return [$e->getMessage()];
+		}
 	}
 
 	public function exec()
 	{
-		return $this->query($this->sqlQuery, $this->sqlAttributes, false);
+		try {
+			return $this->query($this->sqlQuery, $this->sqlAttributes, false);
+		} catch (Exception $e){
+			return [$e->getMessage()];
+		}
+		
 	}
 
 	public function limit($limit)
@@ -151,6 +164,9 @@ class Query
 
 	public function query($statement, array $attributes = null, $fetchAll = true, $fetchMode = 'obj')
 	{
+		if(!$this->pdo->isConnected())
+			throw new Exception('No connected to database');
+
 		if(!empty($attributes)){
 			$executeResponse = $this->pdo
 									->prepare($statement, $attributes, $fetchAll, $fetchMode); 
@@ -175,5 +191,10 @@ class Query
 	{
 		return $this->pdo
 					->getLastInsertId();
+	}
+
+	public function close()
+	{
+		return $this->pdo->disconnect();
 	}
 }
