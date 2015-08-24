@@ -147,6 +147,7 @@ class TestTableTest extends YamlTestCase
     {
     	$pdo = $this->getConnection()
     				->getConnection();
+    				
         $db = new Query($pdo);
 		$db->setTable('testTable');
 
