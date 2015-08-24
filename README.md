@@ -10,6 +10,22 @@ CRUD library for MySQL with PDO
 ```
 $ composer create-project devstackgroup/cbase --stability=dev
 ```
+### Configuration
+
+```
+# config/bootstrap.php
+
+<?php
+	return new PDO(
+	             'mysql:host=127.0.0.1;dbname=dbname',
+                     'dbuser',
+                     'dbpassword'
+		   );
+```
+* ```mysql:host``` - host address
+* ```dbname``` - database name
+* ```'dbuser'``` - database username
+* ```'dbpassword'``` - database password
 
 ## Examples
 ###### Insert example
