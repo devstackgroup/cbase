@@ -1,5 +1,4 @@
 language: php
-sudo: false
 
 php:
   - 5.6
@@ -20,4 +19,4 @@ script:
   - phpunit tests --coverage-clover build/logs/clover.xml
 
 after_script:
-  - php vendor/bin/coveralls --config devstackgroup/cbase/.coveralls.yml
+  - php vendor/bin/coveralls -v
