@@ -17,9 +17,9 @@ $ composer create-project devstackgroup/cbase --stability=dev
 
 <?php
 	return new PDO(
-				    'mysql:host=127.0.0.1;dbname=dbname',
-				    'dbuser',
-				    'dbpassword'
+				 'mysql:host=127.0.0.1;dbname=dbname',
+				 'dbuser',
+				 'dbpassword'
 			    );
 ```
 * ```127.0.0.1``` - host address
