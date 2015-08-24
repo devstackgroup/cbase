@@ -12,7 +12,7 @@ $ composer create-project devstackgroup/cbase --stability=dev
 ```
 ### Configuration
 
-```
+```php
 # config/bootstrap.php
 
 <?php
