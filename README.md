@@ -19,12 +19,15 @@ $ composer create-project devstackgroup/cbase --stability=dev
 ```php
 # config/bootstrap.php
 
-<?php
-	return new PDO(
-				 'mysql:host=127.0.0.1;dbname=dbname',
-				 'dbuser',
-				 'dbpassword'
-			    );
+ <?php
+     return [
+             'pdo' => new PDO(
+                            'mysql:host=127.0.0.1;dbname=dbname',
+                            'dbuser',
+                            'dbpassword'
+                          )
+            ];
+
 ```
 * ```127.0.0.1``` - host address
 * ```dbname``` - database name
