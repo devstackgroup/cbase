@@ -24,7 +24,7 @@ class TestTableTest extends YamlTestCase
         $db = $this->getQuery();
         $data =  $db->read()
                     ->get();
-        
+
         $queryRow = [];
         foreach ($data as $row) {
             $queryRow[] = $row;
@@ -47,7 +47,7 @@ class TestTableTest extends YamlTestCase
                     'id' => 'DESC'
                    ])
                    ->get();
-        
+
         $queryRow = [];
         foreach ($data as $row) {
             $queryRow[] = $row;
@@ -146,8 +146,8 @@ class TestTableTest extends YamlTestCase
     {
         $pdo = $this->getConnection()
                     ->getConnection();
-                    
-        $db = new Query($pdo);
+
+        $db = new Query(['pdo' => $pdo]);
         $db->setTable('testTable');
 
         return $db;

@@ -19,9 +19,9 @@ class Query
     private $pageNumbers = 0;
     private $currentPage = null;
 
-    public function __construct(\PDO $pdo)
+    public function __construct($config)
     {
-        $this->pdo = new Mysql($pdo);
+        $this->pdo = new Mysql($config['pdo']);
     }
 
     public function create($fields)
@@ -49,7 +49,7 @@ class Query
         if (is_array($column)) {
             $column = implode(',', $column);
         }
-        
+
         $table = "FROM {$this->table}";
         $this->sqlQuery = "SELECT {$column} {$table}";
 
@@ -178,7 +178,7 @@ class Query
         if (is_bool($executeResponse)) {
             return $executeResponse;
         }
-        
+
         return $executeResponse->get();
     }
 
