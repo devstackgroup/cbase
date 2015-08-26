@@ -15,7 +15,7 @@ final class Mysql
     private $rowCount = 0;
     private $sqlQuery = "";
     private $sqlResult = [];
-    
+
     private $fetchModeArray = [
         'assoc' => PDO::FETCH_ASSOC,
         'both'    => PDO::FETCH_BOTH,
@@ -46,7 +46,7 @@ final class Mysql
     public function disconnect()
     {
         if (isset($this->isConnect)) {
-            if ($this->sqlQuery->closeCursor()) {
+            if (!is_string($this->sqlQuery) && $this->sqlQuery->closeCursor()) {
                 $this->pdo = null;
                 $this->isConnect = false;
                 return true;
@@ -74,7 +74,7 @@ final class Mysql
             if ($fetchMode !== 'obj' && !array_key_exists($fetchMode, $this->fetchModeArray)) {
                 $fetchMode = 'obj';
             }
-             
+
             if ($fetchAll || !is_bool($fetchAll)) {
                 $this->sqlResult = $this->sqlQuery
                                         ->fetchAll($this->fetchModeArray[$fetchMode]);
@@ -107,14 +107,14 @@ final class Mysql
 
             if ($fetchAll && $fetchMode === 'obj') {
                 $this->sqlResult = $this->sqlQuery;
-                
+
                 return $this;
             }
-            
+
             if ($fetchMode !== 'obj' && !array_key_exists($fetchMode, $this->fetchModeArray)) {
                 $fetchMode = 'obj';
             }
-             
+
             if ($fetchAll || !is_bool($fetchAll)) {
                 $this->sqlResult = $this->sqlQuery
                                         ->fetchAll($this->fetchModeArray[$fetchMode]);
