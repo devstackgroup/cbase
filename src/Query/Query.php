@@ -126,7 +126,7 @@ class Query
             if (is_numeric($key)) {
                 $queryOrders[] = $value;
             } else {
-                $queryOrders[] = $key.' '.$value;
+                $queryOrders[] = $key.' '.'$value';
             }
         }
 
