@@ -201,6 +201,6 @@ class Query
     
     public function error()
     {
-        return $this->pdo->sqlResult;
+        return $this->pdo->get();
     }
 }
