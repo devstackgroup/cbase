@@ -198,4 +198,9 @@ class Query
     {
         return $this->pdo->disconnect();
     }
+    
+    public function error()
+    {
+        return $this->pdo->sqlResult;
+    }
 }
