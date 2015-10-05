@@ -134,6 +134,17 @@ class Query
 
         return $this;
     }
+    
+     public function groupBy($groups)
+    {
+        foreach ($groups as $value) {
+            $queryGroups[] = $value;
+        }
+
+        $this->sqlQuery .=' GROUP BY '.implode(',', $queryGroups);
+
+        return $this;
+    }
 
     public function where($conditions, $or = false)
     {
