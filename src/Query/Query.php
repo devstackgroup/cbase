@@ -134,7 +134,7 @@ class Query
 
         return $this;
     }
-    
+
      public function groupBy($groups)
     {
         foreach ($groups as $value) {
@@ -152,11 +152,11 @@ class Query
             if (is_numeric($key)) {
                 $fieldConditions[] = $value;
             } else {
-                $fieldConditions[] = $key.' = "'.$value.'"';
+                $fieldConditions[] = $key.' = '.$value;
             }
         }
 
-        if (isset($or)) {
+        if (isset($or) && $or !== false) {
             $this->sqlQuery .= ' WHERE '.implode(' OR ', $fieldConditions);
 
             return $this;
@@ -209,7 +209,7 @@ class Query
     {
         return $this->pdo->disconnect();
     }
-    
+
     public function error()
     {
         return $this->pdo->get();
