@@ -103,7 +103,7 @@ class Query
     public function exec()
     {
         try {
-            return $this->query($this->sqlQuery, $this->sqlAttributes, false);
+            return $this->query($this->sqlQuery, ['all'], false);
         } catch (Exception $e) {
             return [$e->getMessage()];
         }
