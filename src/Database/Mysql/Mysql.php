@@ -97,7 +97,7 @@ final class Mysql
         $executeResponse = $this->sqlQuery
                                 ->execute($attributes);
 
-        if (isset($this->sqlQuery)) {
+        if (isset($this->sqlQuery) && !is_bool($this->sqlQuery)) {
             $this->rowCount =  $this->sqlQuery
                                     ->rowCount();
 
