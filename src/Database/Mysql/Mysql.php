@@ -61,7 +61,7 @@ final class Mysql
         $this->sqlQuery =  $this->pdo
                                 ->query($statement);
 
-        if (isset($this->sqlQuery)) {
+        if (isset($this->sqlQuery) && !is_bool($this->sqlQuery)) {
             $this->rowCount =  $this->sqlQuery
                                     ->rowCount();
 
